@@ -6,7 +6,7 @@
 //   By: Thibault Cheneviere <thibault.cheneviere@telecomnancy.eu>            \\
 //                                                                            \\
 //   Created: 2022/12/02 10:42:14 by Thibault Cheneviere                      \\
-//   Updated: 2022/12/02 17:53:43 by Thibault Cheneviere                      \\
+//   Updated: 2022/12/02 18:05:28 by Thibault Cheneviere                      \\
 //                                                                            \\
 // ************************************************************************** \\
 
@@ -69,3 +69,4 @@ fn decider(elf: &str, result: &str) -> u32 {
 		_ => 0,
 	}
 }
+
