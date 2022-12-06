@@ -6,7 +6,7 @@
 //   By: Thibault Cheneviere <thibault.cheneviere@telecomnancy.eu>            \\
 //                                                                            \\
 //   Created: 2022/12/06 17:07:07 by Thibault Cheneviere                      \\
-//   Updated: 2022/12/06 17:52:36 by Thibault Cheneviere                      \\
+//   Updated: 2022/12/06 18:03:05 by Thibault Cheneviere                      \\
 //                                                                            \\
 // ************************************************************************** \\
 
@@ -30,9 +30,9 @@ pub fn part_one_no(split: Vec<String>) -> u32 {
 
 	let win = split[0].as_bytes().windows(4);
 	let _res = win.map(|val| has_unique(val)); 
-	for i in _res {
-		if !i {
-			res += 1
+	for val in _res {
+		if !val {
+			res+= 1;
 		} else {
 			break;
 		}
