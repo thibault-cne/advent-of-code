@@ -6,7 +6,7 @@
 //   By: Thibault Cheneviere <thibault.cheneviere@telecomnancy.eu>            \\
 //                                                                            \\
 //   Created: 2022/12/07 17:36:06 by Thibault Cheneviere                      \\
-//   Updated: 2022/12/08 03:42:32 by Thibault Cheneviere                      \\
+//   Updated: 2022/12/09 13:29:12 by Thibault Cheneviere                      \\
 //                                                                            \\
 // ************************************************************************** \\
 
@@ -161,7 +161,35 @@ pub fn part_one_no(split: Vec<String>) -> usize {
 		root = temp.unwrap();
 	}
 
-	return get_result(Rc::clone(&root), 100000);
+	return get_result_one(Rc::clone(&root), 100000);
+}
+
+pub fn part_two(file: &str) -> usize {
+	let split: Vec<String> = parse_lines(read_file(file));
+
+	return part_two_no(split);
+}
+
+pub fn part_two_no(split: Vec<String>) -> usize {
+	let mut root: Rc<RefCell<Dir>> = Rc::new(RefCell::new(Dir::new(String::from("/"), None)));
+
+	for line in split {
+		if line.as_str() != "" {
+			let temp = exec_line(line, Rc::clone(&root));
+
+			if temp.is_some() {
+				root = temp.unwrap();
+			}
+		}
+	}
+
+	let temp = root.borrow_mut().cd_root();
+
+	if temp.is_some() {
+		root = temp.unwrap();
+	}
+
+	return get_result_two(Rc::clone(&root));
 }
 
 fn exec_line(line: String, root: Rc<RefCell<Dir>>) -> Option<Rc<RefCell<Dir>>> {
@@ -200,7 +228,7 @@ fn exec_line(line: String, root: Rc<RefCell<Dir>>) -> Option<Rc<RefCell<Dir>>> {
 	return None;
 }
 
-fn get_result(root: Rc<RefCell<Dir>>, threshold: usize) -> usize {
+fn get_result_one(root: Rc<RefCell<Dir>>, threshold: usize) -> usize {
 	let mut wait = root.borrow().get_sub_dir();
 	let mut res: usize = 0;
 
@@ -220,6 +248,32 @@ fn get_result(root: Rc<RefCell<Dir>>, threshold: usize) -> usize {
 		wait.append(&mut temp.borrow().get_sub_dir());
 	}
 
+
+	return res;
+}
+
+fn get_result_two(root: Rc<RefCell<Dir>>) -> usize {
+	let root_size: usize = root.borrow().size();
+
+	let threshold: usize = root_size - 40000000;
+
+	let mut wait = root.borrow().get_sub_dir();
+	let mut res: usize = root_size;
+
+	loop {
+		if wait.len() == 0 {
+			break;
+		}
+
+		let temp = wait.pop().unwrap();
+		let _size = temp.borrow().size();
+
+		if _size >= threshold && _size < res {
+			res = _size;
+		}
+
+		wait.append(&mut temp.borrow().get_sub_dir());
+	}
 
 	return res;
 }
