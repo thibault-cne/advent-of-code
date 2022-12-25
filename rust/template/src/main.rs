@@ -1,4 +1,4 @@
-use day_{{day_number}}::{part_one, part_two};
+use {{crate_name}}::{part_one, part_two};
 
 fn main() {
 	println!("--2022 day {{day-number}} solution --");
